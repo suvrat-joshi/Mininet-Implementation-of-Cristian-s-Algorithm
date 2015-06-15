@@ -1,0 +1,469 @@
+\documentclass[12pt,a4paper]{article}
+
+% Header and footer stuff
+\usepackage[left=3.5cm,right=2cm,top=3.5cm,bottom=2cm,includefoot]{geometry}
+
+% for header to work we need to change page style from plain to fancy
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\chead{}
+\rhead{Suvrat Ram Joshi}
+\lhead{}
+\lfoot{Hashing}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.1pt}
+\renewcommand{\footrulewidth}{0.1pt}
+
+\usepackage{amssymb} %for symbols like therefore, because
+
+\usepackage{placeins} %to avoid table repositioning
+
+\usepackage{float}
+
+\usepackage{array} %for tabular operation
+
+\usepackage[hidelinks]{hyperref}%Allows for navigation to the topic by clicking on Table of 		                         contents
+
+\linespread{1.2}
+
+%Here Begins the document
+\begin{document}
+
+\title{Hashing}
+\author{Suvrat Ram Joshi}
+\date{15 June 2015}
+\maketitle
+\thispagestyle{empty}
+
+\newpage
+%Table of contents
+\tableofcontents
+\thispagestyle{empty}
+\cleardoublepage{}
+
+%Body
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\section{HASHING}
+
+\textbf{Hashing} is the transformation of a string of characters into a usually shorter fixed length value or key that represents the original string. \\ \\
+Let us consider a case of bank management system. We all are familiar with the fact that every bank keeps record of their customer if the person has created his/ her account in that particular bank. Suppose a bank named "ABC" is newly established and has its 2 branches in Lalitpur district. Within a week suppose the bank managed to gather 100 customers. Then the record of these customers can be kept by creating an array bankrecord arr[100] of size 100 where the index denotes the account no given to a particular customer by that bank. If suppose we want to view the record of a particular customer then we can simply substitute his/her account no in the array index. But in real practice this convention is contradictory as we have seen bank account usually are of long digits or characters like "91203642" or "92-4364". Suppose that ABC bank fixed "91" as Lalitpur district code and "00" and "01" as its Branch 1 and 2 code respectively and provided bank account no of format District code.Branch code.Customer code then it would be something like "910100". Now if we bring the previous array concept i.e. to replace the index with account no. to view any record then size of array must be of smallest 7 digit number i.e. "1000000". This would be inefficient as for storing record of 100 customers if array size is declared in range of millions then most of the space are certain to be empty. The concept of Hashing is used for this purpose. \\ \\
+Hashing generally refers use of \textbf{Hash function}. A typical hash function is of the form :-
+
+$$ hkey = key \; \% \; tablesize $$
+
+\noindent where tablesize denotes no. of rows in the table. In our case it is 100 as we are talking about 100 customers creating the account. The value returned by the hash function is called \textbf{hashkey} and the new table created including hashkey is called \textbf{hash table}. \\ \\
+Let us suppose Customer A has created an account in ABC bank at Lalitpur Branch 1 and Customer B in the same branch. Since Customer A is the first customer his account no would be something like "910000". Note the last 2 digits represents customer code. Similarly Customer B`s account no. would be something like "910001".
+\FloatBarrier
+\begin{table}[H]
+
+	\centering	
+	\begin{tabular}{|c|c|} %l denotes left alignment
+
+	\hline
+	\textbf{Account No./Key:} & \textbf{Record} \\
+
+	\hline
+	910000 & Customer A \\
+	910001 & Customer B \\
+	\hline
+
+	\end{tabular}
+
+\end{table}
+\FloatBarrier
+
+\noindent If we pass these account no/key to the hash function then it would give hash keys "00" and "01" respectively. \\ \\
+\textbf{Hash Table}
+
+\FloatBarrier
+\begin{table}[H]
+
+	\centering	
+	\begin{tabular}{|c|c|c|} %l denotes left alignment
+
+	\hline
+	\textbf{Hash key} & \textbf{Account No./Key:} & \textbf{Record} \\
+
+	\hline
+	00 & 910000 & Customer A \\
+	01 & 910001 & Customer B \\
+	\hline
+
+	\end{tabular}
+
+\end{table}
+\FloatBarrier
+
+\noindent Now we can declare an array size of 100 to store all these records and by passing hashkey of a particular customer to the array index, his/her records can be retrieved. \\ \\
+Suppose that Customer C opens his/her bank account at ABC bank at Lalitpur Branch 2. Since he/she being the first customer his/her account no. would be "910100". Now if we pass this key to the hash function then the hashkey obtained will be "00". So in hashtable at 00 position of hashkey Customer C record tries to be stored but we can clearly see that, that particular position is already occupied by Customer A. This condition of clash of two or more keys giving same hashkey values is called \textbf{Hash Collision} or \textbf{Hash Clash}.
+
+
+\section{RESOLVING HASH COLLISION}
+
+Basically there are two methods of resolving this Hash Collision which are :-
+
+\begin{enumerate}
+	\item Rehashing (Open Addressing)
+	\item Chaining
+\end{enumerate}
+
+\subsection{REHASHING (OPEN ADDRESSING)}
+This method is one of the efficient method and works on the principle of searching for empty locations in the hash table to store the record when collision occurs. This method is further categorized into three parts namely :- \\ \\
+
+\begin{enumerate}
+	\item Linear Probing
+	\item Quadratic Rehash
+	\item Double Hashing
+\end{enumerate}
+
+\subsubsection{LINEAR PROBING}
+Like for hashing purpose there is a presence of hash function. Similarly for rehashing we need a rehash function. A typical rehash function for linear probing is shown below.
+$$rh = (hashkey + c) \; \% \; tablesize$$
+
+\noindent We can see that the hash value from hash function that caused collision is sent to the rehash function and the rehash function output would be a new hash key. The rehash function is \textbf{recursively} called unless all collisions are removed. For the example about storing customer record our rehash function would be something like :-
+$$rh = (hashkey + 1) \; \% \; 100$$
+We take c = 1, which indicates a good rehash function. The value of c can be choosed as per programmers choice. Since from earlier case we find that hashkey of Customer C is subjected to collision as both Customer A and Customer C has hashkey values 00 and since the location 00 in the hashtable is already occupied by Customer A, we need to find a new empty location for Customer C. So, the hashkey of C is sent to the rehash function as argument and the output or the returned value from the rehash function would be new hashkey for C.
+
+\begin{eqnarray*}
+rh&=&(00 + 1)\;\%\;100 \\
+&=&01 \\
+\end{eqnarray*}
+
+\noindent Recall our previous hash table.
+
+\FloatBarrier
+\begin{table}[H]
+
+	\centering	
+	\begin{tabular}{|c|c|c|} %l denotes left alignment
+
+	\hline
+	\textbf{Hash key} & \textbf{Account No./Key:} & \textbf{Record} \\
+
+	\hline
+	00 & 910000 & Customer A \\
+	01 & 910001 & Customer B \\
+	\hline
+
+	\end{tabular}
+
+\end{table}
+\FloatBarrier
+
+\noindent After calling of rehash function we get 01 as new hash-key for C. But from the hash table we can clearly see that 01 location is again occupied by Customer B record so rehash function is again called with input given now the new hashkey of C.
+
+\begin{eqnarray*}
+rh&=&(01 + 1)\;\%\;100 \\
+&=&02 \\
+\end{eqnarray*}
+
+\noindent Now the record of Customer C is stored in 02 location of hashtable as this location is empty.
+
+\FloatBarrier
+\begin{table}[H]
+
+	\centering	
+	\begin{tabular}{|c|c|c|} %l denotes left alignment
+
+	\hline
+	\textbf{Hash key} & \textbf{Account No./Key:} & \textbf{Record} \\
+
+	\hline
+	00 & 910000 & Customer A \\
+	01 & 910001 & Customer B \\
+	02 & 910100 & Customer C \\
+	\hline
+
+	\end{tabular}
+
+\end{table}
+\FloatBarrier
+
+\noindent The name Linear is given as for every rehash the hashkey increases by a constant value. In our case it is 1. So this method is called Linear Probing.
+
+\subsubsection{QUADRATIC REHASH}
+Although Linear Probing is a good way to resolve Hash Collisions, this method has flaws like \textbf{Primary Clustering} and \textbf{Secondary Clustering}. Primary Clustering is occured whenever two different hashkey compete with one another in successive rehashes i.e. suppose the location 00 and 10 of hashtable is occupied and a certain key hashes to 00 then in linear probing its successive rehashes would be 01,02,..10 and the record will be stored at 11 location as it is empty. Similarly if any other key hashes to 02 then its successive rehashes would be 03, 04,....11 and record is stored at 12. We can see that these two key follows same rehash paths successively i.e. from 3-10 and this phenomenon is called Primary Clustering.\\ \\
+Quadratic rehash is able to eliminate Primary Clustering but secondary clustering is not removed in it as well. The quadratic rehash is similar to linear probing only difference is that it takes an extra argument called iteration. A typical quadratic rehash function is given below :-
+$$rh = (hashkey + (iteration)^2) \;\%\; tablesize$$
+Now for each successive rehashes the iteration value will be increased by 1. \\ \\
+Let us take our earlier case where Customer C account no. hashed to 00 and Customer A and Customer B records are already stored at 00 and 01 location at the hash table respectively. \\ \\
+So the hashkey of Customer C is sent to rehash function for new hashkey.
+
+\begin{eqnarray*}
+rh&=&(00 + (iteration)^2)\;\%\;100 \\
+&=&(00 + 1^2)\;\%\;100\;\;[\because iteration = 1\;as\;the\; rehash\;function\\ &&\hspace{32mm}is\;called\;for\;the\;1^{st}\;time]\\
+&=&(01)\;\%\;100 \\
+&=&01 \\
+\end{eqnarray*}
+
+\noindent Again 01 location is also occupied by Customer B`s record so again rehash function is called.
+
+\begin{eqnarray*}
+rh&=&(01 + (iteration)^2)\;\%\;100 \\
+&=&(01 + 2^2)\;\%\;100\;\;[\because iteration = 2\;as\;the\; rehash\;function\\ &&\hspace{32mm}is\;called\;for\;the\;2^{nd}\;time]\\
+&=&(01 + 4)\;\%\;100 \\
+&=&05 \\
+\end{eqnarray*}
+
+\noindent Since 05 location on the hash table is empty so the record of Customer C now is placed at that location.
+
+\subsubsection{DOUBLE HASHING}
+Double Hashing is considered as best rehash technique compared to other rehash method as this method eliminates both primary as well as secondary clustering. \textbf{Secondary clustering} occurs whenever two key hashing to same hash values follows the same rehash path. Let us suppose Customer C hashes to 00 so if we send this hash key to rehash function, lets suppose quadratic rehash its successive rehashes would be 01, 05, 14,.... Similarly is Customer D`s key also hashes to 00 then its successive rehashes would also be 01, 05, 14,..... We clearly saw that both of these records follow the same rehash path and hence the phenomenon called Secondary Clustering is occured. In case of double hashing we have two hash functions that give different hashkey values and we have one rehash function which add up these hashkeys and take modulus from tablesize. \\ \\
+A typical rehash function in double hashing is shown below :-
+$$rh = (hashkey1 + hashkey2) \;\%\; tablesize$$
+
+\noindent Consider our previous case of Customer C whose key hashes to 00 causing collision. Then hash function 2 is called which can give any value as per programmer`s design of function. Let us assume it gave 03. Now these two hashkeys are sent to the rehash function and new hashkey is obtained.
+
+\begin{eqnarray*}
+rh&=&(00 + 3)\;\%\;100 \\
+&=&03 \\
+\end{eqnarray*}
+
+\noindent Now our hashtable would be something like :-
+
+\FloatBarrier
+\begin{table}[H]
+
+	\centering	
+	\begin{tabular}{|c|c|c|} %l denotes left alignment
+
+	\hline
+	\textbf{Hash key} & \textbf{Account No./Key:} & \textbf{Record} \\
+
+	\hline
+	00 & 910000 & Customer A \\
+	01 & 910001 & Customer B \\
+	02 & & \\
+	03 & 910100 & Customer C \\
+	\hline
+
+	\end{tabular}
+
+\end{table}
+\FloatBarrier
+
+\subsection{CHAINING}
+
+Chaining is considered an effective, time saving method to resolve hash collision with expense of extra memory for list. In this method there is no requirement of rehash function so time used for calling those functions is preserved but an extra memory is used in the hash table for creating a \textbf{list} or \textbf{link}. This method is further categorized into 2 parts.
+
+\begin{enumerate}
+	\item Seperate Chaining
+	\item Coalesced Hashing
+\end{enumerate}
+
+\subsubsection{SEPERATE CHAINING}
+In this method there is a "list" column in the hash table that is initially NULL. With each addition of record this list will point to the node according to the hash key. \\ \\
+Let us take our previous example of storing Customer records in a bank. \\ \\
+Initially before addition of records our hash table would be something like :-
+
+\FloatBarrier
+\begin{table}[H]
+
+	\centering	
+	\begin{tabular}{|c|c|} %l denotes left alignment
+
+	\hline
+	\textbf{Hash key} & \textbf{List} \\
+
+	\hline
+	00 & NULL \\
+	01 & NULL \\
+	02 & NULL \\
+	03 & NULL \\
+	. & . \\
+	. & . \\
+	. & . \\
+	. & . \\
+	99 & NULL \\
+	\hline
+
+	\end{tabular}
+
+\end{table}
+\FloatBarrier
+
+\noindent Now as like earlier Customer A hashes to 00, Customer B hashes to 01 so the hash table becomes :-
+
+\FloatBarrier
+\begin{table}[H]
+	\begin{center}
+	
+	\begin{tabular}{|>{\centering\arraybackslash}m{1in}|>{\centering\arraybackslash}m{3in}|} %l denotes left alignment
+
+	\hline
+	\textbf{Hash key} & \textbf{List} \\
+	\hline
+	
+	& \\[1pt]
+	
+	00 & $\longrightarrow${\begin{tabular}{|c|c|c|} %l denotes left alignment
+
+	\hline
+	910000 & Customer A & NULL \\
+
+	\hline
+
+	\end{tabular}}\\
+	
+	& \\[1pt]
+
+	01 & $\longrightarrow${\begin{tabular}{|c|c|c|} %l denotes left alignment
+
+	\hline
+	910001 & Customer B & NULL \\
+	\hline
+
+	\end{tabular}} \\
+	
+	& \\[1pt]
+	
+	\hline
+
+	\end{tabular}
+
+	\end{center}
+\end{table}
+\FloatBarrier
+
+\noindent The list point to the node for each hashkey values. The node is of format :-
+
+\FloatBarrier
+\begin{table}[H]
+
+	\centering	
+	\begin{tabular}{|c|c|c|} %l denotes left alignment
+
+	\hline
+	\textbf{Key/Account no.} & \textbf{Record} & \textbf{next} \\
+
+	\hline
+
+	\end{tabular}
+
+\end{table}
+\FloatBarrier
+
+\noindent Now since Customer C also hashes to 00 then our hash table changes to :-
+
+\FloatBarrier
+\begin{table}[H]
+	\begin{center}
+	
+	\begin{tabular}{|>{\centering\arraybackslash}m{1in}|>{\centering\arraybackslash}m{5in}|}
+
+	\hline
+	\textbf{Hash key} & \textbf{List} \\
+	\hline
+	 & \\[1pt]
+	00 & $\longrightarrow${\begin{tabular}{|c|c|c|c|c|c|c|} 
+
+	\hline
+	910000 & Customer A & $\longrightarrow$&910100 & Customer C & NULL \\
+
+	\hline
+
+	\end{tabular}}\\
+
+	& \\[1pt]
+	01 & $\longrightarrow${\begin{tabular}{|c|c|c|} 
+
+	\hline
+	910001 & Customer B & NULL \\
+	\hline
+
+	\end{tabular}} \\
+	
+	& \\[1pt]
+
+	\hline
+
+	\end{tabular}
+
+	\end{center}
+\end{table}
+\FloatBarrier
+
+\noindent Similarly other records are also stored in this manner.
+
+\subsubsection{COALESCED HASHING}
+This method is similar to that of seperate chaining and is considered to be the combination of seperate chaining and rehashing. The element of node in seperate chaining is made as column in coalesced hashing and list column is renamed as link. The rehash function can be as per programmers choice or the concept of available location can be used. \\ \\
+Initially before addition of records for our previous example our hash table would be something like :-
+
+\FloatBarrier
+\begin{table}[H]
+
+	\centering	
+	\begin{tabular}{|c|c|c|c|} %l denotes left alignment
+
+	\hline
+	\textbf{Hashkey} & \textbf{Key/Account No.} & \textbf{Record} & \textbf{Link} \\
+
+	\hline
+	
+	00 & - & - & -1 \\
+	01 & - & - & -1 \\
+	02 & - & - & -1 \\
+	. & . & . & . \\
+	. & . & . & . \\
+	. & . & . & . \\
+	99 & - & - & -1 \\
+
+	\hline
+	\end{tabular}
+
+\end{table}
+\FloatBarrier
+
+\noindent Now since Customer A key hashes to 00 and that of Customer B to 01 so our hash table changes to :-
+
+\FloatBarrier
+\begin{table}[H]
+
+	\centering	
+	\begin{tabular}{|c|c|c|c|} %l denotes left alignment
+
+	\hline
+	\textbf{Hashkey} & \textbf{Key/Account No.} & \textbf{Record} & \textbf{Link} \\
+
+	\hline
+	
+	00 & 910000 & Customer A & -1 \\
+	01 & 910001 & Customer B & -1 \\
+
+	\hline
+	\end{tabular}
+
+\end{table}
+\FloatBarrier
+
+\noindent Now since Customer C key also hashes to 00 and since this location is already occupied so a rehash function is called. Lets assume my rehash function gave 04 as new hashkey value for Customer C then the hashtable would be something like :-
+
+\FloatBarrier
+\begin{table}[H]
+
+	\centering	
+	\begin{tabular}{|c|c|c|c|} %l denotes left alignment
+
+	\hline
+	\textbf{Hashkey} & \textbf{Key/Account No.} & \textbf{Record} & \textbf{Link} \\
+
+	\hline
+	
+	00 & 910000 & Customer A & 04 \\
+	01 & 910001 & Customer B & -1 \\
+	02 & & & \\
+	03 & & & \\
+	04 & 910100 & Customer C & -1 \\
+
+	\hline
+	\end{tabular}
+
+\end{table}
+\FloatBarrier
+
+\noindent Note that the link at 00 of hashkey is changed to 04 indicating the record at 04 hashkey initially hashed to 00.
+
+\end{document}
