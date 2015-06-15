@@ -5,20 +5,20 @@ from time import sleep
 serversocket=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 host=socket.gethostname()
 port=9999
-serversocket.bind(("10.0.0.2",port))
+serversocket.bind(("10.0.0.2",port)) # server script must be run on a system with IP 10.0.0.2
 serversocket.listen(5)
 while True:
-        clientsocket,addr=serversocket.accept() //get the client address
+        clientsocket,addr=serversocket.accept() # get the client address
         print("Got a connection from %s" % str(addr))
         
-        //get current date and time 
+        # get current date and time 
         currentTime=datetime.now()
         
-        //hang-up for 2 seconds.. done for processing delay
+        # hang-up for 2 seconds.. done for processing delay
         sleep(2)
         
-        //send the time value only in string format
+        # send the time value only in string format
         clientsocket.send(str(currentTime))
         
-        //terminate client connection
+        # terminate client connection
         clientsocket.close()
