@@ -1,7 +1,7 @@
 # Mininet-Implementation-of-Cristian-s-Algorithm
 Clock synchronization is carried out using Cristian`s algorithm, coded as python script and which is implemented in Mininet which is used for network virtualization.
 
-Initially we need to setup a virtaul environment in our host operating system. For this purpose we need to download Virtualbox from https://www.virtualbox.org/ wiki/Downloads. There we ﬁnd diﬀerent binary releases for diﬀerent platform. Since we are working on windows platform we need to download <b>VirtualBox 4.3.28</b> the latest one for Windows hosts. Then we need to download mininet virtual image which we can get from https://github.com/mininet/openflow-tutorial/wiki/ Installing-Required-Software. There we select either 32bit or 64bit version. For our project we are using 32bit one which is <b>Virtual Machine Image (OVF format, 32-bit, Mininet 2.2.0)</b>. The OVF format can be imported into VirtualBox, VMware or other popular virtualization program. We can also install mininet using native installation from the source which is also present in the github repository.
+Initially we need to setup a virtual environment in our host operating system. For this purpose we need to download Virtualbox from https://www.virtualbox.org/ wiki/Downloads. There we ﬁnd diﬀerent binary releases for diﬀerent platform. Since we are working on windows platform we need to download <b>VirtualBox 4.3.28</b> the latest one for Windows hosts. Then we need to download mininet virtual image which we can get from https://github.com/mininet/openflow-tutorial/wiki/ Installing-Required-Software. There we select either 32bit or 64bit version. For our project we are using 32bit one which is <b>Virtual Machine Image (OVF format, 32-bit, Mininet 2.2.0)</b>. The OVF format can be imported into VirtualBox, VMware or other popular virtualization program. We can also install mininet using native installation from the source which is also present in the github repository.
 Once downloaded, we need to setup virtualbox in our machine. After the installation process, we now run virtualbox. There we need to setup a virtual machine. The procedure is as follows :
 
   * On the top left corner of the window click on <b>New</b>.
@@ -20,7 +20,7 @@ We also need to perform a quick conﬁguration before running the virtual machin
 This is necessary since we will be do a SSH from the host system (in our case Windows) to the virtual machine. After setting up the virtual machine run it. We will be prompted to virtual console where we need to enter the username and password inorder to access it. Enter username as ’mininet’ and password also as ’mininet’. We will then be logged in to the machine if we get 
 
 ```sh
-  $mininet@mininet-vm:∼$.
+  mininet@mininet-vm:∼$.
 ```
 
 We will be needing an X server and a SSH client. X server is necessary inorder to assign IP to the host and SSH client is necessary for making a remote connection which in our case is accessing virtual machine from host machine (Windows). We have used <b>Xming</b> as X server and <b>PuTTy</b> as SSH client. Firstly we need to run xming which once run can be seen on the notiﬁcation panel of the taskbar. Now in the virtual console of the virtual machine i.e. 
