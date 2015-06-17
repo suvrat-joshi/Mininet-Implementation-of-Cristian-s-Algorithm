@@ -32,7 +32,7 @@ We will be needing an X server and a SSH client. X server is necessary inorder t
 to view all the network adapters. There we will see eth1 which we had setup earlier while conﬁguring the virtual machine. This port is initially not assigned with any IP. Now inorder to assign it with an IP address we type
 
 ```sh
-  : $ sudo dhclient eth1
+  :∼$ sudo dhclient eth1
 ```
 This will assign IP to the port which is done by Xming. Now we need to SSH from host machine to virtual machine (remote).
 We can SSH using PuTTy in windows considering following steps :
@@ -55,12 +55,12 @@ Now we can create simple network topologies in mininet using a basic command sud
 ```
 
 where,
-sudo provides administrative priviledge 
-mn starts basic mininet software script
-–topo is the python function inside the script single is for linear topology 
-3 means 3 hosts 
-–mac deﬁne easy mac address 
-ovsk means the topology is using openV switch
+&nbsp;&nbsp;&nbsp;&nbsp;sudo provides administrative priviledge<br> 
+&nbsp;&nbsp;&nbsp;&nbsp;mn starts basic mininet software script<br>
+&nbsp;&nbsp;&nbsp;&nbsp;–topo is the python function inside the script single is for linear topology<br> 
+&nbsp;&nbsp;&nbsp;&nbsp;3 means 3 hosts<br>
+&nbsp;&nbsp;&nbsp;&nbsp;–mac deﬁne easy mac address<br> 
+&nbsp;&nbsp;&nbsp;&nbsp;ovsk means the topology is using openV switch
 
 For our case we will create a simple network topology having 2 hosts connected to a single switch and the switch connected to the controller. For this we simply use 
 
