@@ -1,21 +1,21 @@
 # Mininet-Implementation-of-Cristian-s-Algorithm
 Clock synchronization is carried out using Cristian`s algorithm, coded as python script and which is implemented in Mininet which is used for network virtualization.
 
-Initially we need to setup a virtaul environment in our host operating system. For this purpose we need to download Virtualbox from https://www.virtualbox.org/ wiki/Downloads. There we ﬁnd diﬀerent binary releases for diﬀerent platform. Since we are working on windows platform we need to download VirtualBox 4.3.28 the latest one for Windows hosts. Then we need to download mininet virtual image which we can get from https://github.com/mininet/openflow-tutorial/wiki/ Installing-Required-Software. There we select either 32bit or 64bit version. For our project we are using 32bit one which is Virtual Machine Image (OVF format, 32-bit, Mininet 2.2.0). The OVF format can be imported into VirtualBox, VMware or other popular virtualization program. We can also install mininet using native installation from the source which is also present in the github repository.
+Initially we need to setup a virtaul environment in our host operating system. For this purpose we need to download Virtualbox from https://www.virtualbox.org/ wiki/Downloads. There we ﬁnd diﬀerent binary releases for diﬀerent platform. Since we are working on windows platform we need to download <b>VirtualBox 4.3.28<b> the latest one for Windows hosts. Then we need to download mininet virtual image which we can get from https://github.com/mininet/openflow-tutorial/wiki/ Installing-Required-Software. There we select either 32bit or 64bit version. For our project we are using 32bit one which is <b>Virtual Machine Image (OVF format, 32-bit, Mininet 2.2.0)</b>. The OVF format can be imported into VirtualBox, VMware or other popular virtualization program. We can also install mininet using native installation from the source which is also present in the github repository.
 Once downloaded, we need to setup virtualbox in our machine. After the installation process, we now run virtualbox. There we need to setup a virtual machine. The procedure is as follows :
 
-  * On the top left corner of the window click on New.
-  * Fill up the credentials by giving a name to the virtual machine, select type as Linux and version as 32bit.
-  * Now provide a memory size for the virtual machine. You can leave this to default 512 MB.
-  * On the next window choose Use an existing virtual hard drive ﬁle and browse to the folder where you downloaded the mininet virtual image.
-  * Click on Create to create the speciﬁed virtual machine.
+  * On the top left corner of the window click on <b>New</b>.
+  * Fill up the credentials by giving a <b>name</b> to the virtual machine, select <b>type</b> as Linux and <b>version</b> as 32bit.
+  * Now provide a <b>memory size</b> for the virtual machine. You can leave this to default 512 MB.
+  * On the next window choose <b>Use an existing virtual hard drive ﬁle</b> and browse to the folder where you downloaded the mininet virtual image.
+  * Click on <b>Create</b> to create the speciﬁed virtual machine.
 
 We also need to perform a quick conﬁguration before running the virtual machine. For that we need to follow the following steps :
 
   * Select the virtual machine on the left-hand panel of the virtual-box window.
-  * Click on Settings and navigate to Network option.
-  * Now click on Adapter 2 tab and inside there check Enable Network Adapter.
-  * Choose Attached to as Host-only Adapter.
+  * Click on <b>Settings</b> and navigate to <b>Network</b> option.
+  * Now click on <b>Adapter 2</b> tab and inside there check <b>Enable Network Adapter</b>.
+  * Choose Attached to as <b>Host-only Adapter</b>.
 
 This is necessary since we will be do a SSH from the host system (in our case Windows) to the virtual machine. After setting up the virtual machine run it. We will be prompted to virtual console where we need to enter the username and password inorder to access it. Enter username as ’mininet’ and password also as ’mininet’. We will then be logged in to the machine if we get 
 
@@ -23,7 +23,7 @@ This is necessary since we will be do a SSH from the host system (in our case Wi
   $mininet@mininet-vm:∼$.
 ```
 
-We will be needing an X server and a SSH client. X server is necessary inorder to assign IP to the host and SSH client is necessary for making a remote connection which in our case is accessing virtual machine from host machine (Windows). We have used Xming as X server and PuTTy as SSH client. Firstly we need to run xming which once run can be seen on the notiﬁcation panel of the taskbar. Now in the virtual console of the virtual machine i.e. 
+We will be needing an X server and a SSH client. X server is necessary inorder to assign IP to the host and SSH client is necessary for making a remote connection which in our case is accessing virtual machine from host machine (Windows). We have used <b>Xming</b> as X server and <b>PuTTy</b> as SSH client. Firstly we need to run xming which once run can be seen on the notiﬁcation panel of the taskbar. Now in the virtual console of the virtual machine i.e. 
 
 ```sh
   mininet@mininet-vm:∼$ sudo ifconﬁg -a
@@ -37,7 +37,7 @@ to view all the network adapters. There we will see eth1 which we had setup earl
 This will assign IP to the port which is done by Xming. Now we need to SSH from host machine to virtual machine (remote).
 We can SSH using PuTTy in windows considering following steps :
 
-  * Download putty.exe and place it in your desired location in windows.
+  * Download <b>putty.exe</b> and place it in your desired location in windows.
   * Open up command prompt.
   * Direct to the folder where you have kept putty.exe
   * In the command prompt type
@@ -68,9 +68,9 @@ For our case we will create a simple network topology having 2 hosts connected t
   :∼$ sudo mn
 ```
 
-Once we hit enter it will show the setting up part and then we will enter to mininet CLI. In the CLI we can use diﬀerent commands like mininet>nodes which will show us the nodes in the network topology. Information about other commands can be gained using help command.
+Once we hit enter it will show the setting up part and then we will enter to mininet CLI. In the CLI we can use diﬀerent commands like <b>mininet>nodes</b> which will show us the nodes in the network topology. Information about other commands can be gained using help command.
 
-Now since the network topology we setup has two hosts h1 and h2, for implementation of Cristian‘s algorithm we need to make one as time-server and another as client/host. Check the IP address of any one of the host which we intend to make timeserver. For this case we have considered h1 to be time-server, so we need to enter the command 
+Now since the network topology we setup has two hosts h1 and h2, for implementation of <b>Cristian‘s algorithm</b> we need to make one as time-server and another as client/host. Check the IP address of any one of the host which we intend to make timeserver. For this case we have considered h1 to be time-server, so we need to enter the command 
 
 ```sh
   mininet>h1 ifconﬁg
@@ -95,7 +95,7 @@ and after typing the code save it. Similar is the case for client.py. Now in h1 
   ```
   
 which is listening on port 9999. On the terminal of h2 host we run the client.py script with similar command. Once the client connects to the port 9999 on which the server is listening to the server will send the client the current time and in the client process we have implemented Cristian‘s algorithm inorder to add up the request and response time so that the client can get the actual time and not the delayed one.
-<b>After</b> implementation of the algorithm we can stop the processes by closing the terminals of h1 and h2 and exit out of mininet using command 
+After implementation of the algorithm we can stop the processes by closing the terminals of h1 and h2 and exit out of mininet using command 
 
 ```sh
   mininet>exit
