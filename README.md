@@ -23,7 +23,13 @@ This is necessary since we will be do a SSH from the host system (in our case Wi
   $mininet@mininet-vm:∼$.
 ```
 
-We will be needing an X server and a SSH client. X server is necessary inorder to assign IP to the host and SSH client is necessary for making a remote connection which in our case is accessing virtual machine from host machine (Windows). We have used Xming as X server and PuTTy as SSH client. Firstly we need to run xming which once run can be seen on the notiﬁcation panel of the taskbar. Now in the virtual console of the virtual machine i.e. mininet@mininet-vm:∼$ type sudo ifconﬁg -a to view all the network adapters. There we will see eth1 which we had setup earlier while conﬁguring the virtual machine. This port is initially not assigned with any IP. Now inorder to assign it with an IP address we type
+We will be needing an X server and a SSH client. X server is necessary inorder to assign IP to the host and SSH client is necessary for making a remote connection which in our case is accessing virtual machine from host machine (Windows). We have used Xming as X server and PuTTy as SSH client. Firstly we need to run xming which once run can be seen on the notiﬁcation panel of the taskbar. Now in the virtual console of the virtual machine i.e. 
+
+```sh
+  mininet@mininet-vm:∼$ sudo ifconﬁg -a
+```
+
+to view all the network adapters. There we will see eth1 which we had setup earlier while conﬁguring the virtual machine. This port is initially not assigned with any IP. Now inorder to assign it with an IP address we type
 
 ```sh
   : $ sudo dhclient eth1
@@ -67,7 +73,7 @@ Once we hit enter it will show the setting up part and then we will enter to min
 Now since the network topology we setup has two hosts h1 and h2, for implementation of Cristian‘s algorithm we need to make one as time-server and another as client/host. Check the IP address of any one of the host which we intend to make timeserver. For this case we have considered h1 to be time-server, so we need to enter the command 
 
 ```sh
-mininet>h1 ifconﬁg
+  mininet>h1 ifconﬁg
 ```
 
 This will tell us the IP address of the host h1 which we need to place in the server.py script inorder to create a socket. Now we perform a quick ping test using pingall command inorder to check if h1 and h2 can communicate or not. If the communication is possible we now open up terminals of both h1 and h2 using xterm command i.e. 
@@ -89,7 +95,7 @@ and after typing the code save it. Similar is the case for client.py. Now in h1 
   ```
   
 which is listening on port 9999. On the terminal of h2 host we run the client.py script with similar command. Once the client connects to the port 9999 on which the server is listening to the server will send the client the current time and in the client process we have implemented Cristian‘s algorithm inorder to add up the request and response time so that the client can get the actual time and not the delayed one.
-After implementation of the algorithm we can stop the processes by closing the terminals of h1 and h2 and exit out of mininet using command 
+<b>After</b> implementation of the algorithm we can stop the processes by closing the terminals of h1 and h2 and exit out of mininet using command 
 
 ```sh
   mininet>exit
