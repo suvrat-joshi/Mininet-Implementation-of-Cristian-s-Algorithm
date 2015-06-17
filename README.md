@@ -54,13 +54,13 @@ Now we can create simple network topologies in mininet using a basic command sud
   :∼$sudo mn –topo single,3 –mac –switch ovsk –controller remote
 ```
 
-where,
-&nbsp;&nbsp;&nbsp;&nbsp;sudo provides administrative priviledge<br> 
-&nbsp;&nbsp;&nbsp;&nbsp;mn starts basic mininet software script<br>
-&nbsp;&nbsp;&nbsp;&nbsp;–topo is the python function inside the script single is for linear topology<br> 
-&nbsp;&nbsp;&nbsp;&nbsp;3 means 3 hosts<br>
-&nbsp;&nbsp;&nbsp;&nbsp;–mac deﬁne easy mac address<br> 
-&nbsp;&nbsp;&nbsp;&nbsp;ovsk means the topology is using openV switch
+where, <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sudo provides administrative priviledge<br> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mn starts basic mininet software script<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;–topo is the python function inside the script single is for linear topology<br> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3 means 3 hosts<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;–mac deﬁne easy mac address<br> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ovsk means the topology is using openV switch
 
 For our case we will create a simple network topology having 2 hosts connected to a single switch and the switch connected to the controller. For this we simply use 
 
