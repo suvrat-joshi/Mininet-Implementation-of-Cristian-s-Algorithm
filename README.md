@@ -51,7 +51,7 @@ We can SSH using PuTTy in windows considering following steps :
 Now we can create simple network topologies in mininet using a basic command sudo mn. For more speciﬁc ones we can give arguments in the command. For eg :
 
 ```sh
-  :∼$sudo mn –topo single,3 –mac –switch ovsk –controller remote
+  :∼$sudo mn -–topo single,3 -–mac –-switch ovsk –-controller remote
 ```
 
 where, <br>
